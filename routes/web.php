@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/download', static function (FilesystemManager $filesystem) {
+    return $filesystem->disk('local')->download(
+        'public/test.jpg',
+        'test-download.jpg',
+        ['Content-Type' => 'image/jpeg']
+    );
 });
